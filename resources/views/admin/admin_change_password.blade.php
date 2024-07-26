@@ -1,8 +1,6 @@
 @extends('admin.admin_dashboard')
 
 @section('admin')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
     <div class="page-content">
 
 
@@ -59,51 +57,35 @@
                     <div class="card">
                         <div class="card-body" bis_skin_checked="1">
 
-                            <h6 class="card-title">Basic Form</h6>
+                            <h6 class="card-title">Admin Change Password</h6>
 
-                            <form class="forms-sample" action="{{ route('admin.profile.store') }}" method="POST"
+                            <form class="forms-sample" action="{{ route('admin.update.password') }}" method="POST"
                                 enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputUsername1" class="form-label">Username</label>
-                                    <input type="text" class="form-control" name="username" id="exampleInputUsername1"
-                                        autocomplete="off" value="{{ $profileData->username }}">
+                                    <label for="exampleInputUsername1" class="form-label">Old Password</label>
+                                    <input type="password" class="form-control @error('old_password') is-invalid @enderror"
+                                        name="old_password" id="old_password" autocomplete="off">
+                                    @error('old_password')
+                                        <span class="alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputUsername1" class="form-label">Name</label>
-                                    <input type="text" class="form-control" name="name" id="exampleInputUsername1"
-                                        autocomplete="off" value="{{ $profileData->name }}">
+                                    <label for="exampleInputUsername1" class="form-label">New Password</label>
+                                    <input type="password" class="form-control @error('new_password') is-invalid @enderror"
+                                        name="new_password" id="new_password" autocomplete="off">
+                                    @error('new_password')
+                                        <span class="alert-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                                 <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                                    <input type="email" name="email" class="form-control" id="exampleInputEmail1"
-                                        value="{{ $profileData->email }}">
-                                </div>
-                                <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputPassword1" class="form-label">Phone</label>
-                                    <input type="text" class="form-control" name="phone" id="exampleInputPassword1"
-                                        autocomplete="off" value="{{ $profileData->phone }}">
-                                </div>
-
-                                <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputPassword1" class="form-label">Address</label>
-                                    <input type="text" class="form-control" name="address" id="exampleInputPassword1"
-                                        autocomplete="off" value="{{ $profileData->address }}">
-                                </div>
-
-                                <div class="mb-3" bis_skin_checked="1">
-                                    <label for="exampleInputPassword1" class="form-label">Photo</label>
-                                    <input class="form-control" type="file" id="image" name="photo">
-                                </div>
-
-                                <div class="mb-3">
-
-                                    <img id="showImage" class="wd-80 rounded-circle"
-                                        src="{{ !empty($profileData->photo) ? url('/upload/admin_images/' . $profileData->photo) : url('/upload/no_image.jpg') }}"
-                                        alt="profile">
+                                    <label for="exampleInputUsername1" class="form-label">Confirm New Password</label>
+                                    <input type="password" class="form-control" name="new_password_confirmation"
+                                        id="new_password_confirmation" autocomplete="off">
                                 </div>
 
                                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
+
                             </form>
 
                         </div>
@@ -115,16 +97,4 @@
         </div>
 
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#image').change(function(e) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    $('#showImage').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(e.target.files['0']);
-            });
-        });
-    </script>
 @endsection
