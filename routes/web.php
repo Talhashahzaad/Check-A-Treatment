@@ -3,7 +3,9 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Backend\ServiceTypeController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +24,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 
-// Admin Auth Start
+// Admin Auth Routes
 
 Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'AdminDashboard'])->name('admin.dashboard');
@@ -35,11 +37,25 @@ Route::middleware('auth', 'role:admin')->group(function () {
 
 Route::get('admin/login', [AdminController::class, 'AdminLogin'])->name('admin.login');
 
-// Admin Auth End
 
-// Agent Auth Start
+//Admin Group Middleware
+
+Route::middleware('auth', 'role:admin')->group(function () {
+
+    //Service type All Routes
+
+    Route::controller(ServiceTypeController::class)->group(function () {
+
+        Route::get('all/type', 'AllType')->name('all.type');
+        Route::get('add/type', 'AddType')->name('add.type');
+        Route::post('store/type', 'StoreType')->name('store.type');
+    });
+});
+
+
+
+
+// Agent Auth Routes
 Route::middleware('auth', 'role:agent')->group(function () {
     Route::get('agent/dashboard', [AgentController::class, 'AgentDashboard'])->name('agent.dashboard');
 });
-
-// Agent Auth End

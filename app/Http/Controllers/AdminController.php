@@ -15,12 +15,12 @@ class AdminController extends Controller
     public function AdminDashboard()
     {
         return view('admin.index');
-    }
+    } //end method AdminDashboard
 
     public function AdminLogin()
     {
         return view('admin.admin_login');
-    }
+    } //end method AdminLogin
 
 
     public function AdminLogout(Request $request)
@@ -37,7 +37,7 @@ class AdminController extends Controller
         );
 
         return redirect('/admin/login')->with($notification);
-    }
+    } //end method AdminLogout
 
     public function AdminProfile()
     {
@@ -45,7 +45,7 @@ class AdminController extends Controller
 
         $profileData = User::find($id);
         return view('admin.admin_profile_view', compact('profileData'));
-    }
+    } //end method AdminProfile
 
     public function AdminProfileStore(Request $request)
     {
@@ -72,14 +72,14 @@ class AdminController extends Controller
         );
 
         return redirect()->back()->with($notification);
-    }
+    } //end method AdminProfileStore
 
     public function AdminChangePassword()
     {
         $id = Auth::user()->id;
         $profileData = User::find($id);
         return view('admin.admin_change_password', compact('profileData'));
-    }
+    } //end method AdminChangePassword
 
     public function AdminUpdatePassword(Request $request)
     {
@@ -114,5 +114,5 @@ class AdminController extends Controller
         );
 
         return redirect()->back()->with($notification);
-    }
+    } //end method AdminUpdatePassword
 }
